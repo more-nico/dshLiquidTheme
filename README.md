@@ -1,4 +1,4 @@
-# dsh-liquid-glass
+# dsh-liquid-theme
 
 DeepSeek Harness Web UI 的 Liquid Glass 主题插件。加载后叠在官方浅色 / 深色 token 之上：深海虎鲸默认壁纸、霜玻璃、圆角折射、高光描边。折射算法来自 [shuding/liquid-glass](https://github.com/shuding/liquid-glass) 的圆角 SDF 置换。不替换 Appearance 里的「浅色 / 深色 / 跟随系统」。
 
@@ -29,7 +29,7 @@ dsh web
 ## 卸载
 
 ```bash
-dsh plugin --profile web remove dsh-liquid-glass
+dsh plugin --profile web remove dsh-liquid-theme
 ```
 
 重启 `dsh web` 后恢复官方皮肤。
@@ -39,14 +39,14 @@ dsh plugin --profile web remove dsh-liquid-glass
 打开侧栏 **设置**，左侧会多一页 **Liquid Glass**：
 
 1. **启用 Liquid Glass** — 关掉后立刻恢复官方皮肤；本页还在，可以再打开。不是卸载插件。
-2. **玻璃透明度** — 0–100%，同时作用在侧栏、顶栏、输入条、菜单、浮层等所有霜玻璃。
-3. **玻璃模糊** — 0–40px，调节所有霜玻璃的 backdrop 模糊。默认 6px。折射打开时会再压低一点，好让边缘弯折看得见。
-4. **折射玻璃** — 开关。关掉后所有折射层变成普通霜玻璃；强度数值会保留。
-5. **折射强度** — 0–100%，圆角边缘把背后的壁纸 / 对话弯折。默认 30%。
+2. **玻璃透明度** — 0–100%，同时作用在侧栏、顶栏、输入条、菜单、浮层等所有霜玻璃。默认 20%。
+3. **玻璃模糊** — 0–40px，调节所有霜玻璃的 backdrop 模糊。默认 5px。折射打开时会再压低一点，好让边缘弯折看得见。
+4. **折射玻璃** — 开关。关掉后所有折射层变成普通霜玻璃；强度数值会保留。默认开。
+5. **折射强度** — 0–100%，圆角边缘把背后的壁纸 / 对话弯折。默认 15%。
 6. **背景图** — 默认是内置 2K 深海虎鲸壁纸；可填 `http(s)` / `data:image` 地址、选一张本地图片，或指定纯色。恢复默认会回到虎鲸图。
-7. **内容垫层透明度 / 模糊** — 只垫在用户气泡和 AI 正文上。思考 / 工具 / 搜索折叠时不垫，展开后才垫。起始页没有垫层。默认都是 0。
+7. **内容垫层透明度 / 模糊** — 只垫在用户气泡和 AI 正文上。思考 / 工具 / 搜索折叠时不垫，展开后才垫。起始页没有垫层。默认 25% / 5px。
 
-配置存在当前浏览器的 `localStorage`（键 `dsh-liquid-glass`），刷新后仍在。卸载插件不会自动清这项。
+配置存在当前浏览器的 `localStorage`（键 `dsh-liquid-theme`），刷新后仍在。旧键 `dsh-liquid-glass` 会自动迁过来。卸载插件不会自动清这项。
 
 ## 行为
 

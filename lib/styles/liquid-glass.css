@@ -9,7 +9,7 @@ html:has(body[data-liquid-glass]) {
 }
 
 body[data-liquid-glass] {
-  --lg-blur: 6px;
+  --lg-blur: 5px;
   --lg-sat: 170%;
   --lg-contrast: 1.12;
   --lg-bright: 1.04;
@@ -17,8 +17,8 @@ body[data-liquid-glass] {
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
   --lg-alpha: 1;
-  --lg-scrim: 0;
-  --lg-scrim-blur: 0px;
+  --lg-scrim: 0.25;
+  --lg-scrim-blur: 5px;
   --lg-wash: 255 255 255;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.1);
   --lg-fill: rgba(255, 255, 255, calc(0.16 * var(--lg-alpha)));
