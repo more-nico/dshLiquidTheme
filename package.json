@@ -1,0 +1,41 @@
+{
+  "name": "dsh-liquid-glass",
+  "version": "0.1.0",
+  "description": "Liquid Glass theme for DeepSeek Harness Web UI",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "liquid-glass",
+    "theme"
+  ],
+  "license": "MIT",
+  "author": "more_nico <1767435527@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/more_nico/dshLiquidTheme.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-theme"
+      ],
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}

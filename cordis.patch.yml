@@ -1,0 +1,5 @@
+# Liquid Glass theme layer. Install with:
+#   dsh plugin --profile web add <this package or local path>
+- insert:
+    - id: liquid-glass
+      name: dsh-liquid-glass
