@@ -357,6 +357,11 @@ body[data-liquid-glass] :has(> [role="dialog"]) > :not([role="dialog"]) {
   -webkit-backdrop-filter: none !important;
 }
 
+body[data-liquid-glass] [role="dialog"] {
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+}
+
 /* Menus stay readable; the context meter should stay a thin frost, not a milky card.
    Official menu z-index is 1100; the settings overlay is 20000 so it can cover
    header/composer. Portaled menus must sit above that overlay. */
