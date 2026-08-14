@@ -15,8 +15,8 @@ body[data-liquid-glass] {
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
-  --lg-fill: rgba(255, 255, 255, 0.48);
-  --lg-fill-strong: rgba(255, 255, 255, 0.62);
+  --lg-fill: rgba(255, 255, 255, 0.34);
+  --lg-fill-strong: rgba(255, 255, 255, 0.58);
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.62),
     inset -1px -1px 0 rgba(255, 255, 255, 0.18);
@@ -62,7 +62,8 @@ body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
   background: transparent !important;
 }
 
-/* Floating sidebar slab. No backdrop-filter here — settings is a descendant. */
+/* Floating sidebar slab. Do not inject a covering blur layer here:
+   the slot child is 0×0, so an absolute overlay paints on top of the logo. */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
   margin: var(--lg-inset) 6px var(--lg-inset) var(--lg-inset);
@@ -70,6 +71,11 @@ body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   border-radius: var(--lg-radius);
   background: var(--lg-fill);
   box-shadow: var(--lg-shine), var(--lg-elev);
+}
+
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child > [data-slot],
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child > [data-slot] > * {
+  height: 100%;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
