@@ -66,11 +66,22 @@ body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
    the slot child is 0×0, so an absolute overlay paints on top of the logo. */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
+  box-sizing: border-box;
   margin: var(--lg-inset) 6px var(--lg-inset) var(--lg-inset);
+  padding-right: 10px;
   border: var(--lg-hairline) !important;
   border-radius: var(--lg-radius);
   background: var(--lg-fill);
   box-shadow: var(--lg-shine), var(--lg-elev);
+}
+
+/* Inner root is still laid out at 280px while the floating column is ~264px.
+   Pin it to the column and add a wider right gutter so timestamps aren't flush. */
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child [data-slot="sidebar"] > * {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding-right: 24px;
 }
 
 body[data-liquid-glass] [data-lg-host="header"] {
