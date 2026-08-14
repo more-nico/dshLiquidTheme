@@ -15,8 +15,8 @@ body[data-liquid-glass] {
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
-  --lg-fill: rgba(255, 255, 255, 0.34);
-  --lg-fill-strong: rgba(255, 255, 255, 0.58);
+  --lg-fill: rgba(255, 255, 255, 0.22);
+  --lg-fill-strong: rgba(255, 255, 255, 0.5);
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.62),
     inset -1px -1px 0 rgba(255, 255, 255, 0.18);
@@ -28,10 +28,10 @@ body[data-liquid-glass] {
   min-height: 100%;
   background-color: transparent;
   background-image:
-    radial-gradient(900px 620px at 8% -8%, rgba(176, 206, 240, 0.9), transparent 62%),
-    radial-gradient(820px 580px at 96% 0%, rgba(226, 206, 224, 0.55), transparent 58%),
-    radial-gradient(760px 520px at 70% 110%, rgba(190, 220, 214, 0.45), transparent 56%),
-    linear-gradient(168deg, #e7eef6 0%, #eef1f4 46%, #e6ebf3 100%);
+    radial-gradient(980px 680px at 6% -12%, rgba(120, 176, 240, 0.95), transparent 58%),
+    radial-gradient(860px 620px at 98% 4%, rgba(236, 170, 210, 0.72), transparent 54%),
+    radial-gradient(800px 560px at 72% 108%, rgba(140, 214, 200, 0.58), transparent 52%),
+    linear-gradient(168deg, #c5d8f0 0%, #e8e4ef 48%, #d4e4ee 100%);
   background-attachment: fixed;
 }
 
@@ -73,9 +73,9 @@ body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-body[data-liquid-glass] #root > [data-slot] > div > div:first-child > [data-slot],
-body[data-liquid-glass] #root > [data-slot] > div > div:first-child > [data-slot] > * {
-  height: 100%;
+body[data-liquid-glass] [data-lg-host="sidebar"] {
+  position: relative;
+  width: 100%;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
@@ -147,9 +147,14 @@ body[data-liquid-glass] .dsh-lg-shine {
   box-shadow: var(--lg-shine);
 }
 
-body[data-liquid-glass] [data-lg-host] > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
+body[data-liquid-glass] [data-lg-host="header"] > :not(.dsh-lg-effect):not(.dsh-lg-shine),
+body[data-liquid-glass] [data-lg-host="composer"] > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
   position: relative;
-  z-index: 3;
+  z-index: 1;
+}
+
+body[data-liquid-glass] :has(> [role="dialog"]) {
+  z-index: 20000 !important;
 }
 
 body[data-liquid-glass] [data-side] {

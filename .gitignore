@@ -12,3 +12,6 @@ Thumbs.db
 .vscode/
 preview/
 .ref-liquid-glass/
+shot-*.png
+see-*.jpg
+see-*.png
