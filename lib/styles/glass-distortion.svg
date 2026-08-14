@@ -1,17 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-  <!-- Ported from lucasromerodb/liquid-glass-effect-macos (CodeSandbox nn5q2y). -->
-  <filter id="dsh-glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
-    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence"/>
-    <feComponentTransfer in="turbulence" result="mapped">
-      <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
-      <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
-      <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
-    </feComponentTransfer>
-    <feGaussianBlur in="turbulence" stdDeviation="4" result="softMap"/>
-    <feSpecularLighting in="softMap" surfaceScale="2" specularConstant="0.6" specularExponent="80" lighting-color="white" result="specLight">
-      <fePointLight x="-200" y="-200" z="300"/>
-    </feSpecularLighting>
-    <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
-    <feDisplacementMap in="SourceGraphic" in2="softMap" scale="8" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
+  <!-- shuding/liquid-glass style: feImage displacement maps, filled in by client.js -->
+  <defs>
+    <filter id="dsh-lg-refract-sidebar" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-header" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-composer" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-traces" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-dock" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-pill" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="dsh-lg-refract-dialog" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">
+      <feImage result="map" x="0" y="0" width="1" height="1" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
 </svg>
