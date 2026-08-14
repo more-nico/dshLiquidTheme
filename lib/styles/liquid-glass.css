@@ -8,7 +8,7 @@ html:has(body[data-liquid-glass]) {
 }
 
 body[data-liquid-glass] {
-  --lg-blur: 3px;
+  --lg-blur: 8px;
   --lg-tint: rgba(255, 255, 255, 0.25);
   --lg-shine:
     inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
