@@ -60,3 +60,7 @@ dsh plugin --profile web remove dsh-liquid-theme
 ## 兼容
 
 针对 DSH Web 的 `--dsw-*` token 和 AppFrame 三栏结构。CSS Module 的 hash class 故意不绑。
+
+## License
+
+[MIT](./LICENSE)
