@@ -348,6 +348,13 @@ body[data-liquid-glass] [data-lg-host="float"] > :not(.dsh-lg-effect):not(.dsh-l
   z-index: 1;
 }
 
+/* Settings overlay lives in the sidebar. The inner rail is z-index 1 so
+   frost can sit underneath; the home composer is sticky z=7 and would
+   paint over the dialog unless the whole column is lifted while open. */
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child:has([role="dialog"]) {
+  z-index: 20000;
+}
+
 body[data-liquid-glass] :has(> [role="dialog"]) {
   z-index: 20000 !important;
 }
