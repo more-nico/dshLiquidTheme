@@ -1,6 +1,6 @@
 {
   "name": "dsh-liquid-glass",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "macOS-style floating Liquid Glass theme for DeepSeek Harness Web UI",
   "type": "module",
   "main": "lib/index.js",

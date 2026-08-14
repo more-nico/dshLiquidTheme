@@ -324,11 +324,23 @@ body[data-liquid-glass] button[aria-label="Back to bottom"] {
   -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
-/* Trajectory: wallpaper shows through; toolbar is a thin frost strip.
-   Extra top pad is set in JS so Duration/Turns sit below the overlay header. */
+/* Trajectory card: same 16px inset as the overlay header, rounded top. */
 body[data-liquid-glass] [data-lg-host="traces"] {
-  background: transparent !important;
   box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: calc(100% - 32px);
+  height: calc(100% - var(--lg-traces-shift, 0px));
+  margin: var(--lg-traces-shift, 0px) 16px 0;
+  border: var(--lg-hairline);
+  border-bottom: none;
+  border-radius: var(--lg-radius-bar) var(--lg-radius-bar) 0 0;
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: var(--lg-shine);
+  overflow: hidden;
+}
+
+body[data-liquid-glass][data-ds-dark-theme] [data-lg-host="traces"] {
+  background: rgba(22, 24, 30, 0.28);
 }
 
 body[data-liquid-glass] [data-lg-host="traces"] > *:first-child {
