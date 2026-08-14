@@ -15,6 +15,9 @@ body[data-liquid-glass] {
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
   --lg-alpha: 1;
+  --lg-veil: 0;
+  --lg-scrim: 0;
+  --lg-wash: 255 255 255;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
   --lg-fill: rgba(255, 255, 255, calc(0.22 * var(--lg-alpha)));
   --lg-fill-strong: rgba(255, 255, 255, calc(0.50 * var(--lg-alpha)));
@@ -38,6 +41,7 @@ body[data-liquid-glass] {
 }
 
 body[data-liquid-glass][data-ds-dark-theme] {
+  --lg-wash: 12 14 20;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.12);
   --lg-fill: rgba(22, 24, 30, calc(0.52 * var(--lg-alpha)));
   --lg-fill-strong: rgba(22, 24, 30, calc(0.64 * var(--lg-alpha)));
@@ -68,11 +72,26 @@ body[data-liquid-glass][data-lg-wallpaper] {
   background-attachment: fixed;
 }
 
+/* Full-page wash over the wallpaper / mesh. Lives under #root. */
+body[data-liquid-glass]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: rgb(var(--lg-wash) / var(--lg-veil));
+}
+
 body[data-liquid-glass] #root,
 body[data-liquid-glass] #root > [data-slot],
 body[data-liquid-glass] #root > [data-slot] > div,
 body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
   background: transparent !important;
+}
+
+body[data-liquid-glass] #root {
+  position: relative;
+  z-index: 1;
 }
 
 /* Floating sidebar slab. Do not inject a covering blur layer here:
@@ -107,6 +126,23 @@ body[data-liquid-glass] [data-slot="conversation.session"] {
 
 body[data-liquid-glass] [data-slot="conversation"] > * {
   position: relative;
+  isolation: isolate;
+}
+
+/* Reading-column veil: opaque in the middle, fully clear at the sides. */
+body[data-liquid-glass] [data-slot="conversation"] > *::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--lg-wash) / var(--lg-scrim)) 22%,
+    rgb(var(--lg-wash) / var(--lg-scrim)) 78%,
+    transparent 100%
+  );
 }
 
 /* Official collapsed track is 56px. A left inset + hairline would clip
