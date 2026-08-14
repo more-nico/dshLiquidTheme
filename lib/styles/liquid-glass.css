@@ -88,9 +88,19 @@ body[data-liquid-glass] [data-lg-host="header"] {
   position: relative;
 }
 
+/* Official collapsed width minus our floating margins was 44px and clipped
+   the 36px icon hit targets. Lock a rail that can hold them. */
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
-  margin: var(--lg-inset) 6px;
+  margin: var(--lg-inset) 6px var(--lg-inset) 8px;
+  padding: 0;
+  width: 56px;
+  min-width: 56px;
+  flex: 0 0 56px;
   border-radius: 16px;
+}
+
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child [data-slot="sidebar"] > * {
+  padding-right: 0;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) {
@@ -108,28 +118,25 @@ body[data-liquid-glass] #root > [data-slot] > div[data-details-collapsed] > div:
   background: transparent;
 }
 
-/* Floating session header. */
+/* Floating session header. Bottom margin keeps scrolled lines in the
+   wallpaper gap instead of showing through the glass. */
 body[data-liquid-glass] [data-slot="conversation.session.header"] > * {
   position: relative;
   box-sizing: border-box;
-  margin: var(--lg-inset) 16px 0;
+  margin: var(--lg-inset) 16px 10px;
   border: var(--lg-hairline);
   border-radius: var(--lg-radius-bar);
   background: var(--lg-fill);
   box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-/* Composer host: frost only, no displacement. */
+/* Composer host: frost only, no displacement.
+   Do not set overflow:hidden — permission/model menus are descendants. */
 body[data-liquid-glass] [data-lg-host="composer"] {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   background: var(--lg-fill-strong) !important;
   box-shadow: var(--lg-shine), var(--lg-elev);
-}
-
-body[data-liquid-glass] [data-lg-host="header"] {
-  position: relative;
 }
 
 body[data-liquid-glass] .dsh-lg-effect {
@@ -143,10 +150,11 @@ body[data-liquid-glass] .dsh-lg-effect {
   -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
+/* Shine stays under chrome. A z-index above content covers composer menus. */
 body[data-liquid-glass] .dsh-lg-shine {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
   overflow: hidden;
   border-radius: inherit;
