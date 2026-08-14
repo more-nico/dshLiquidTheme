@@ -14,10 +14,11 @@ body[data-liquid-glass] {
   --lg-radius: 22px;
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
+  --lg-alpha: 1;
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
-  --lg-fill: rgba(255, 255, 255, 0.22);
-  --lg-fill-strong: rgba(255, 255, 255, 0.5);
-  --lg-fill-float: rgba(255, 255, 255, 0.14);
+  --lg-fill: rgba(255, 255, 255, calc(0.22 * var(--lg-alpha)));
+  --lg-fill-strong: rgba(255, 255, 255, calc(0.50 * var(--lg-alpha)));
+  --lg-fill-float: rgba(255, 255, 255, calc(0.14 * var(--lg-alpha)));
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.62),
     inset -1px -1px 0 rgba(255, 255, 255, 0.18);
@@ -38,9 +39,9 @@ body[data-liquid-glass] {
 
 body[data-liquid-glass][data-ds-dark-theme] {
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.12);
-  --lg-fill: rgba(22, 24, 30, 0.52);
-  --lg-fill-strong: rgba(22, 24, 30, 0.64);
-  --lg-fill-float: rgba(22, 24, 30, 0.28);
+  --lg-fill: rgba(22, 24, 30, calc(0.52 * var(--lg-alpha)));
+  --lg-fill-strong: rgba(22, 24, 30, calc(0.64 * var(--lg-alpha)));
+  --lg-fill-float: rgba(22, 24, 30, calc(0.28 * var(--lg-alpha)));
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.14),
     inset -1px -1px 0 rgba(255, 255, 255, 0.04);
@@ -55,6 +56,16 @@ body[data-liquid-glass][data-ds-dark-theme] {
     radial-gradient(760px 540px at 98% 8%, rgba(120, 56, 120, 0.22), transparent 54%),
     radial-gradient(700px 500px at 64% 112%, rgba(28, 120, 140, 0.18), transparent 54%),
     linear-gradient(168deg, #12151c 0%, #0b0d12 100%);
+}
+
+/* Custom wallpaper replaces the built-in mesh. Set by the settings page. */
+body[data-liquid-glass][data-lg-wallpaper] {
+  background-color: #0b0d12;
+  background-image: var(--lg-wallpaper);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body[data-liquid-glass] #root,
@@ -108,11 +119,11 @@ body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:
   flex: 0 0 56px;
   border-radius: 16px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, calc(0.42 * var(--lg-alpha)));
 }
 
 body[data-liquid-glass][data-ds-dark-theme] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
-  background: rgba(22, 24, 30, 0.64);
+  background: rgba(22, 24, 30, calc(0.64 * var(--lg-alpha)));
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child [data-slot="sidebar"] > * {
@@ -179,12 +190,12 @@ body[data-liquid-glass] [data-slot="conversation.session.header"] [role="tablist
   padding: 3px;
   border: var(--lg-hairline);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, calc(0.16 * var(--lg-alpha)));
   box-shadow: var(--lg-shine);
 }
 
 body[data-liquid-glass][data-ds-dark-theme] [data-slot="conversation.session.header"] [role="tablist"] {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, calc(0.06 * var(--lg-alpha)));
 }
 
 body[data-liquid-glass] [data-slot="conversation.session.header"] [role="tablist"] button {
@@ -334,13 +345,13 @@ body[data-liquid-glass] [data-lg-host="traces"] {
   border: var(--lg-hairline);
   border-bottom: none;
   border-radius: var(--lg-radius-bar) var(--lg-radius-bar) 0 0;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, calc(0.10 * var(--lg-alpha)));
   box-shadow: var(--lg-shine);
   overflow: hidden;
 }
 
 body[data-liquid-glass][data-ds-dark-theme] [data-lg-host="traces"] {
-  background: rgba(22, 24, 30, 0.28);
+  background: rgba(22, 24, 30, calc(0.28 * var(--lg-alpha)));
 }
 
 body[data-liquid-glass] [data-lg-host="traces"] > *:first-child {
@@ -387,4 +398,173 @@ body[data-liquid-glass] [data-side] {
   body[data-liquid-glass] * {
     scroll-behavior: auto !important;
   }
+}
+
+/* Settings section — lives in the official modal, so it must not depend on
+   data-liquid-glass (the user has to be able to turn the theme back on). */
+.dsh-lg-pref {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 560px;
+  padding: 4px 0 28px;
+  color: var(--dsw-alias-label-primary);
+}
+
+.dsh-lg-pref-lead {
+  margin: 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.dsh-lg-pref-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 14px;
+  background: var(--dsw-alias-bg-module-platform);
+}
+
+.dsh-lg-pref-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dsh-lg-pref-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.dsh-lg-pref-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.dsh-lg-pref-hint {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.dsh-lg-pref-switch {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--dsw-alias-button-ghost-active-fill);
+  cursor: pointer;
+}
+
+.dsh-lg-pref-switch[aria-checked="true"] {
+  background: var(--dsw-alias-button-primary-fill);
+}
+
+.dsh-lg-pref-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 0.16s ease;
+}
+
+.dsh-lg-pref-switch[aria-checked="true"]::after {
+  transform: translateX(18px);
+}
+
+.dsh-lg-pref-meta {
+  flex: none;
+  min-width: 3em;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.dsh-lg-pref-range {
+  width: 100%;
+  margin: 2px 0 0;
+  accent-color: var(--dsw-alias-button-primary-fill, #2b2f3a);
+}
+
+.dsh-lg-pref-field {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dsh-lg-pref-field input[type="text"] {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13px;
+}
+
+.dsh-lg-pref-field input[type="text"]:focus {
+  outline: none;
+  border-color: var(--dsw-static-neutral-bluish-400, #7aa2e8);
+}
+
+.dsh-lg-pref-btn {
+  flex: none;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  background: var(--dsw-alias-button-elevated-fill);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.dsh-lg-pref-btn:hover {
+  background: var(--dsw-alias-button-floating-hover);
+}
+
+.dsh-lg-pref-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.dsh-lg-pref-preview {
+  width: 100%;
+  height: 88px;
+  border-radius: 12px;
+  background-color: #1a1d24;
+  background-image: var(--lg-pref-preview);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--dsw-alias-border-l2);
+}
+
+.dsh-lg-pref-error {
+  margin: 0;
+  color: var(--dsw-alias-label-danger, #c44747);
+  font-size: 12px;
+  line-height: 18px;
 }
