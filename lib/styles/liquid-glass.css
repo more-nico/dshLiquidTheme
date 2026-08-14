@@ -1,118 +1,138 @@
-/* Liquid Glass material for DeepSeek Harness.
-   Colors come from theme.overrideTokens (inline on body).
-   This sheet only adds wallpaper, blur, specular edges, and motion. */
+/* Liquid Glass for DeepSeek Harness.
+   Layer recipe from lucasromerodb/liquid-glass-effect-macos (CodeSandbox nn5q2y):
+   effect (blur + SVG displacement) / tint / shine. */
 
 html[data-liquid-glass],
 html:has(body[data-liquid-glass]) {
-  background-color: #d7e2f0;
+  background-color: #c8d8ec;
 }
 
 body[data-liquid-glass] {
-  --lg-blur: 28px;
-  --lg-saturate: 180%;
-  --lg-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
-  --lg-edge: 1px solid rgba(255, 255, 255, 0.42);
+  --lg-blur: 3px;
+  --lg-tint: rgba(255, 255, 255, 0.25);
+  --lg-shine:
+    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
+  --lg-shadow: 0 6px 6px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 0, 0, 0.08);
   --dsw-shadow-lv1: 0 2px 10px rgba(20, 28, 45, 0.06);
   --dsw-shadow-lv2: 0 8px 28px rgba(20, 28, 45, 0.08), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
   --dsw-shadow-lv3: 0 18px 50px rgba(20, 28, 45, 0.16), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
-  --dsw-mask-blur: blur(18px);
+  --dsw-mask-blur: blur(8px);
   min-height: 100%;
   background-color: transparent;
   background-image:
-    radial-gradient(1200px 820px at 8% -12%, rgba(168, 206, 255, 0.95), transparent 58%),
-    radial-gradient(900px 700px at 92% 0%, rgba(255, 186, 214, 0.58), transparent 52%),
-    radial-gradient(820px 620px at 78% 108%, rgba(164, 232, 214, 0.5), transparent 54%),
-    radial-gradient(640px 480px at 40% 60%, rgba(255, 255, 255, 0.35), transparent 60%),
+    radial-gradient(18px 18px at 12% 18%, rgba(255, 186, 214, 0.55), transparent 70%),
+    radial-gradient(22px 22px at 28% 72%, rgba(164, 214, 255, 0.5), transparent 70%),
+    radial-gradient(16px 16px at 63% 24%, rgba(255, 228, 170, 0.45), transparent 70%),
+    radial-gradient(20px 20px at 81% 58%, rgba(186, 232, 210, 0.5), transparent 70%),
+    radial-gradient(14px 14px at 47% 46%, rgba(210, 190, 255, 0.4), transparent 70%),
+    radial-gradient(24px 24px at 8% 88%, rgba(255, 200, 180, 0.4), transparent 70%),
+    radial-gradient(1100px 760px at 8% -12%, rgba(168, 206, 255, 0.95), transparent 58%),
+    radial-gradient(900px 700px at 92% 0%, rgba(255, 186, 214, 0.62), transparent 52%),
+    radial-gradient(820px 620px at 78% 108%, rgba(164, 232, 214, 0.52), transparent 54%),
     linear-gradient(165deg, #e7eef8 0%, #f6f1ea 48%, #e4ecf6 100%);
+  background-size:
+    220px 220px,
+    260px 260px,
+    200px 200px,
+    240px 240px,
+    180px 180px,
+    280px 280px,
+    auto, auto, auto, auto;
   background-attachment: fixed;
 }
 
 body[data-liquid-glass][data-ds-dark-theme] {
-  --lg-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
-  --lg-edge: 1px solid rgba(255, 255, 255, 0.14);
+  --lg-tint: rgba(18, 20, 28, 0.32);
+  --lg-shine:
+    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.22),
+    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1);
+  --lg-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), 0 0 24px rgba(0, 0, 0, 0.2);
   --dsw-shadow-lv1: 0 2px 12px rgba(0, 0, 0, 0.28);
   --dsw-shadow-lv2: 0 10px 32px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
   --dsw-shadow-lv3: 0 22px 56px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
-  --dsw-mask-blur: blur(22px);
+  --dsw-mask-blur: blur(10px);
   background-color: #090b10;
   background-image:
-    radial-gradient(1100px 760px at 12% -14%, rgba(78, 124, 230, 0.48), transparent 56%),
-    radial-gradient(860px 640px at 96% 8%, rgba(186, 72, 168, 0.3), transparent 52%),
-    radial-gradient(760px 560px at 62% 112%, rgba(36, 168, 186, 0.24), transparent 54%),
-    radial-gradient(520px 400px at 48% 42%, rgba(255, 255, 255, 0.05), transparent 62%),
+    radial-gradient(18px 18px at 12% 18%, rgba(120, 90, 200, 0.4), transparent 70%),
+    radial-gradient(22px 22px at 28% 72%, rgba(40, 140, 210, 0.35), transparent 70%),
+    radial-gradient(16px 16px at 63% 24%, rgba(210, 80, 160, 0.28), transparent 70%),
+    radial-gradient(20px 20px at 81% 58%, rgba(36, 168, 186, 0.3), transparent 70%),
+    radial-gradient(14px 14px at 47% 46%, rgba(255, 255, 255, 0.06), transparent 70%),
+    radial-gradient(24px 24px at 8% 88%, rgba(80, 100, 220, 0.28), transparent 70%),
+    radial-gradient(1100px 760px at 12% -14%, rgba(78, 124, 230, 0.5), transparent 56%),
+    radial-gradient(860px 640px at 96% 8%, rgba(186, 72, 168, 0.32), transparent 52%),
+    radial-gradient(760px 560px at 62% 112%, rgba(36, 168, 186, 0.26), transparent 54%),
     linear-gradient(168deg, #10131b 0%, #0a0c12 100%);
 }
 
-/* App frame: let the wallpaper show through the shell. */
 body[data-liquid-glass] #root,
-body[data-liquid-glass] #root > div:first-child {
+body[data-liquid-glass] #root > [data-slot],
+body[data-liquid-glass] #root > [data-slot] > div {
   background: transparent !important;
 }
 
-/* Sidebar column */
-body[data-liquid-glass] #root > div:first-child > div:first-child {
-  background: transparent;
-  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  box-shadow: var(--lg-highlight);
-  border-right: var(--lg-edge) !important;
-}
-
-/* Conversation column stays optically clear */
-body[data-liquid-glass] #root > div:first-child > div:nth-child(2) {
+body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
   background: transparent;
 }
 
-/* Details column */
-body[data-liquid-glass] #root > div:first-child > div:nth-child(3) {
-  background: transparent;
-  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  box-shadow: var(--lg-highlight);
-  border-left: var(--lg-edge) !important;
+/* Frame columns: 1 sidebar, 2 center, 3 details. */
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
+  position: relative;
+  box-shadow: var(--lg-shine);
 }
 
-/* Resize handles */
-body[data-liquid-glass] [data-side] {
-  filter: drop-shadow(0 2px 8px rgba(20, 28, 45, 0.12));
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
-/* Shell overlays (toasts, floating chrome) */
-body[data-liquid-glass] [data-shell-overlay] > * {
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  backdrop-filter: blur(20px) saturate(170%);
+body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) {
+  border-left: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
-/* Native dialogs / role dialogs if present */
-body[data-liquid-glass] [role="dialog"],
-body[data-liquid-glass] dialog {
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  backdrop-filter: blur(28px) saturate(180%);
-  box-shadow: var(--dsw-shadow-lv3);
+body[data-liquid-glass] :has(> .dsh-lg-effect) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-/* Soften large opaque fills that sit on the wallpaper */
-body[data-liquid-glass] #root > div:first-child::before {
-  content: "";
-  pointer-events: none;
+/* Dedicated layers injected by the client (same split as the sandbox demo). */
+body[data-liquid-glass] .dsh-lg-effect {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    radial-gradient(800px 400px at 50% -20%, rgba(255, 255, 255, 0.28), transparent 70%);
+  pointer-events: none;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: inherit;
+  backdrop-filter: blur(var(--lg-blur));
+  -webkit-backdrop-filter: blur(var(--lg-blur));
+  filter: url(#dsh-glass-distortion);
 }
 
-body[data-liquid-glass][data-ds-dark-theme] #root > div:first-child::before {
-  background:
-    radial-gradient(800px 400px at 50% -20%, rgba(255, 255, 255, 0.06), transparent 70%);
+body[data-liquid-glass] .dsh-lg-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  box-shadow: var(--lg-shine);
+}
+
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child > :not(.dsh-lg-effect):not(.dsh-lg-shine),
+body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
+  position: relative;
+  z-index: 3;
+}
+
+body[data-liquid-glass] [data-side] {
+  filter: drop-shadow(0 2px 8px rgba(20, 28, 45, 0.12));
 }
 
 @media (prefers-reduced-transparency: reduce) {
   body[data-liquid-glass] {
     --lg-blur: 0px;
-    --lg-saturate: 100%;
     background-image: none;
     background-color: var(--dsw-static-neutral-bluish-50, #f9fafb);
   }
@@ -121,24 +141,14 @@ body[data-liquid-glass][data-ds-dark-theme] #root > div:first-child::before {
     background-color: var(--dsw-static-neutral-bluish-950, #151517);
   }
 
-  body[data-liquid-glass] #root > div:first-child > div:first-child,
-  body[data-liquid-glass] #root > div:first-child > div:nth-child(3),
-  body[data-liquid-glass] [data-shell-overlay] > *,
-  body[data-liquid-glass] [role="dialog"],
-  body[data-liquid-glass] dialog {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  body[data-liquid-glass] .dsh-lg-effect,
+  body[data-liquid-glass] .dsh-lg-shine {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   body[data-liquid-glass] * {
     scroll-behavior: auto !important;
-  }
-}
-
-@media (max-width: 1024px) {
-  body[data-liquid-glass] {
-    --lg-blur: 22px;
   }
 }

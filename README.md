@@ -37,8 +37,9 @@ dsh plugin --profile web remove dsh-liquid-glass
 ## 行为
 
 - 只改材质，不改布局、slot、工具或模型请求
+- 玻璃层按 [lucasromerodb/liquid-glass-effect-macos](https://github.com/lucasromerodb/liquid-glass-effect-macos)（[CodeSandbox nn5q2y](https://codesandbox.io/p/sandbox/nn5q2y)）的三层配方：SVG `feDisplacementMap` 折射 + 浅染色 + 内高光，模糊约 3px
 - 代码块 / diff / 终端保持较实的底，避免糊字
-- `prefers-reduced-transparency: reduce` 时关掉 blur，改用实色
+- `prefers-reduced-transparency: reduce` 时关掉折射和 blur，改用实色
 - 卸载插件即撤回 token 覆盖和 `data-liquid-glass`
 
 ## 兼容
