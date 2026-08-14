@@ -40,7 +40,8 @@ dsh plugin --profile web remove dsh-liquid-glass
 
 1. **启用 Liquid Glass** — 关掉后立刻恢复官方皮肤；本页还在，可以再打开。不是卸载插件。
 2. **玻璃透明度** — 0–100%，同时作用在侧栏、顶栏、输入条、菜单、浮层等所有霜玻璃。
-3. **背景图** — 默认内置渐变；可填 `http(s)` / `data:image` 地址，或选一张本地图片。
+3. **玻璃模糊** — 0–40px，调节所有霜玻璃的 backdrop 模糊。默认 20px。
+4. **背景图** — 默认内置渐变；可填 `http(s)` / `data:image` 地址，或选一张本地图片。
 
 配置存在当前浏览器的 `localStorage`（键 `dsh-liquid-glass`），刷新后仍在。卸载插件不会自动清这项。
 
