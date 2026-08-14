@@ -73,9 +73,8 @@ body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-body[data-liquid-glass] [data-lg-host="sidebar"] {
+body[data-liquid-glass] [data-lg-host="header"] {
   position: relative;
-  width: 100%;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
@@ -119,10 +118,6 @@ body[data-liquid-glass] [data-lg-host="composer"] {
 }
 
 body[data-liquid-glass] [data-lg-host="header"] {
-  position: relative;
-}
-
-body[data-liquid-glass] [data-lg-host="sidebar"] {
   position: relative;
 }
 
