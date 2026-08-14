@@ -2,14 +2,14 @@
 
 DeepSeek Harness Web UI 的 Liquid Glass 主题插件。加载后叠在官方浅色 / 深色 token 之上：深海虎鲸默认壁纸、霜玻璃、圆角折射、高光描边。折射算法来自 [shuding/liquid-glass](https://github.com/shuding/liquid-glass) 的圆角 SDF 置换。不替换 Appearance 里的「浅色 / 深色 / 跟随系统」。
 
-仓库：[gitee.com/more_nico/dshLiquidTheme](https://gitee.com/more_nico/dshLiquidTheme)
+仓库：[github.com/more-nico/dshLiquidTheme](https://github.com/more-nico/dshLiquidTheme)
 
 ## 安装
 
 需要本机已能运行 `dsh web`（当前验证版本 `@deepseek-ai/dsh@0.1.0-rc.6`）。
 
 ```bash
-dsh plugin --profile web add https://gitee.com/more_nico/dshLiquidTheme.git
+dsh plugin --profile web add https://github.com/more-nico/dshLiquidTheme.git
 ```
 
 本地开发：
