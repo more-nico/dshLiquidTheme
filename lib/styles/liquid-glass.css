@@ -129,43 +129,24 @@ body[data-liquid-glass] [data-slot="conversation.session"] {
 }
 
 body[data-liquid-glass] [data-slot="conversation"] > * {
-  --lg-read-w: min(780px, calc(100% - 32px));
   position: relative;
-  isolation: isolate;
 }
 
-/* Reading pad: strongest fill + blur over the 780px transcript,
-   clear by 20% of that width outside each side (not the column edge). */
-body[data-liquid-glass] [data-slot="conversation"] > *::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
+/* Per-block reading pads: user bubble + assistant prose. Think/tool
+   rows stay clear until expanded. */
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="assistant"],
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="expand"] {
+  box-sizing: border-box;
   background: rgb(var(--lg-wash) / var(--lg-scrim));
   backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
   -webkit-backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent calc(50% - var(--lg-read-w) * 0.7),
-    #000 calc(50% - var(--lg-read-w) * 0.5),
-    #000 calc(50% + var(--lg-read-w) * 0.5),
-    transparent calc(50% + var(--lg-read-w) * 0.7)
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent calc(50% - var(--lg-read-w) * 0.7),
-    #000 calc(50% - var(--lg-read-w) * 0.5),
-    #000 calc(50% + var(--lg-read-w) * 0.5),
-    transparent calc(50% + var(--lg-read-w) * 0.7)
-  );
+  border-radius: 16px;
+  padding: 10px 16px;
 }
 
-/* New-session / landing hero: no reading pad. */
-body[data-liquid-glass]:has([data-slot="conversation.hero.workspace"]) [data-slot="conversation"] > *::before,
-body[data-liquid-glass][data-lg-home] [data-slot="conversation"] > *::before {
-  content: none;
-  display: none;
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="user"] {
+  backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
 }
 
 /* Official collapsed track is 56px. A left inset + hairline would clip
