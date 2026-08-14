@@ -15,10 +15,9 @@ body[data-liquid-glass] {
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
   --lg-alpha: 1;
-  --lg-veil: 0;
   --lg-scrim: 0;
+  --lg-scrim-blur: 0px;
   --lg-wash: 255 255 255;
-  --lg-solid: rgb(var(--lg-wash) / var(--lg-scrim));
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
   --lg-fill: rgba(255, 255, 255, calc(0.22 * var(--lg-alpha)));
   --lg-fill-strong: rgba(255, 255, 255, calc(0.50 * var(--lg-alpha)));
@@ -71,16 +70,6 @@ body[data-liquid-glass][data-lg-wallpaper] {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-}
-
-/* Full-page wash over the wallpaper / mesh. Lives under #root. */
-body[data-liquid-glass]::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: rgb(var(--lg-wash) / var(--lg-veil));
 }
 
 body[data-liquid-glass] #root,
@@ -140,23 +129,35 @@ body[data-liquid-glass] [data-slot="conversation.session"] {
 }
 
 body[data-liquid-glass] [data-slot="conversation"] > * {
+  --lg-read-w: min(780px, calc(100% - 32px));
   position: relative;
   isolation: isolate;
 }
 
-/* Reading-column veil: opaque in the middle, fully clear at the sides. */
+/* Reading pad: strongest fill + blur over the 780px transcript,
+   clear by 20% of that width outside each side (not the column edge). */
 body[data-liquid-glass] [data-slot="conversation"] > *::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(
+  background: rgb(var(--lg-wash) / var(--lg-scrim));
+  backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
+  -webkit-mask-image: linear-gradient(
     90deg,
-    transparent 0%,
-    rgb(var(--lg-wash) / var(--lg-scrim)) 22%,
-    rgb(var(--lg-wash) / var(--lg-scrim)) 78%,
-    transparent 100%
+    transparent calc(50% - var(--lg-read-w) * 0.7),
+    #000 calc(50% - var(--lg-read-w) * 0.5),
+    #000 calc(50% + var(--lg-read-w) * 0.5),
+    transparent calc(50% + var(--lg-read-w) * 0.7)
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent calc(50% - var(--lg-read-w) * 0.7),
+    #000 calc(50% - var(--lg-read-w) * 0.5),
+    #000 calc(50% + var(--lg-read-w) * 0.5),
+    transparent calc(50% + var(--lg-read-w) * 0.7)
   );
 }
 
