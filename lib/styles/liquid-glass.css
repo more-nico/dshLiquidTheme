@@ -312,9 +312,12 @@ body[data-liquid-glass] :has(> [role="dialog"]) {
   z-index: 20000 !important;
 }
 
-/* Menus stay readable; the context meter should stay a thin frost, not a milky card. */
+/* Menus stay readable; the context meter should stay a thin frost, not a milky card.
+   Official menu z-index is 1100; the settings overlay is 20000 so it can cover
+   header/composer. Portaled menus must sit above that overlay. */
 body[data-liquid-glass] [role="menu"],
 body[data-liquid-glass] [role="listbox"] {
+  z-index: 20010 !important;
   background: var(--lg-fill-strong) !important;
   border: var(--lg-hairline) !important;
   box-shadow: var(--lg-shine), var(--lg-elev) !important;
