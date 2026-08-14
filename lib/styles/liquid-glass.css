@@ -1,69 +1,58 @@
-/* Liquid Glass for DeepSeek Harness.
-   Layer recipe from lucasromerodb/liquid-glass-effect-macos (CodeSandbox nn5q2y):
-   effect (blur + SVG displacement) / tint / shine. */
+/* Production Liquid Glass for DeepSeek Harness.
+   macOS-style floating frost: sidebar + session header + composer.
+   Settings live inside the sidebar, so the sidebar column itself must
+   never carry backdrop-filter / filter (that traps position:fixed). */
 
 html[data-liquid-glass],
 html:has(body[data-liquid-glass]) {
-  background-color: #c8d8ec;
+  background-color: #d5deea;
 }
 
 body[data-liquid-glass] {
-  --lg-blur: 8px;
-  --lg-tint: rgba(255, 255, 255, 0.25);
+  --lg-blur: 20px;
+  --lg-sat: 170%;
+  --lg-radius: 22px;
+  --lg-radius-bar: 18px;
+  --lg-inset: 10px;
+  --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
+  --lg-fill: rgba(255, 255, 255, 0.48);
+  --lg-fill-strong: rgba(255, 255, 255, 0.62);
   --lg-shine:
-    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
-    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
-  --lg-shadow: 0 6px 6px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 0, 0, 0.08);
-  --dsw-shadow-lv1: 0 2px 10px rgba(20, 28, 45, 0.06);
-  --dsw-shadow-lv2: 0 8px 28px rgba(20, 28, 45, 0.08), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
-  --dsw-shadow-lv3: 0 18px 50px rgba(20, 28, 45, 0.16), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
-  --dsw-mask-blur: blur(8px);
+    inset 1px 1px 0 rgba(255, 255, 255, 0.62),
+    inset -1px -1px 0 rgba(255, 255, 255, 0.18);
+  --lg-elev: 0 8px 28px rgba(30, 40, 60, 0.08), 0 1px 2px rgba(30, 40, 60, 0.04);
+  --dsw-shadow-lv1: 0 2px 8px rgba(20, 28, 45, 0.05);
+  --dsw-shadow-lv2: 0 8px 24px rgba(20, 28, 45, 0.07);
+  --dsw-shadow-lv3: 0 16px 40px rgba(20, 28, 45, 0.12);
+  --dsw-mask-blur: blur(12px);
   min-height: 100%;
   background-color: transparent;
   background-image:
-    radial-gradient(18px 18px at 12% 18%, rgba(255, 186, 214, 0.55), transparent 70%),
-    radial-gradient(22px 22px at 28% 72%, rgba(164, 214, 255, 0.5), transparent 70%),
-    radial-gradient(16px 16px at 63% 24%, rgba(255, 228, 170, 0.45), transparent 70%),
-    radial-gradient(20px 20px at 81% 58%, rgba(186, 232, 210, 0.5), transparent 70%),
-    radial-gradient(14px 14px at 47% 46%, rgba(210, 190, 255, 0.4), transparent 70%),
-    radial-gradient(24px 24px at 8% 88%, rgba(255, 200, 180, 0.4), transparent 70%),
-    radial-gradient(1100px 760px at 8% -12%, rgba(168, 206, 255, 0.95), transparent 58%),
-    radial-gradient(900px 700px at 92% 0%, rgba(255, 186, 214, 0.62), transparent 52%),
-    radial-gradient(820px 620px at 78% 108%, rgba(164, 232, 214, 0.52), transparent 54%),
-    linear-gradient(165deg, #e7eef8 0%, #f6f1ea 48%, #e4ecf6 100%);
-  background-size:
-    220px 220px,
-    260px 260px,
-    200px 200px,
-    240px 240px,
-    180px 180px,
-    280px 280px,
-    auto, auto, auto, auto;
+    radial-gradient(900px 620px at 8% -8%, rgba(176, 206, 240, 0.9), transparent 62%),
+    radial-gradient(820px 580px at 96% 0%, rgba(226, 206, 224, 0.55), transparent 58%),
+    radial-gradient(760px 520px at 70% 110%, rgba(190, 220, 214, 0.45), transparent 56%),
+    linear-gradient(168deg, #e7eef6 0%, #eef1f4 46%, #e6ebf3 100%);
   background-attachment: fixed;
 }
 
 body[data-liquid-glass][data-ds-dark-theme] {
-  --lg-tint: rgba(18, 20, 28, 0.32);
+  --lg-hairline: 1px solid rgba(255, 255, 255, 0.12);
+  --lg-fill: rgba(22, 24, 30, 0.52);
+  --lg-fill-strong: rgba(22, 24, 30, 0.64);
   --lg-shine:
-    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.22),
-    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1);
-  --lg-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), 0 0 24px rgba(0, 0, 0, 0.2);
-  --dsw-shadow-lv1: 0 2px 12px rgba(0, 0, 0, 0.28);
-  --dsw-shadow-lv2: 0 10px 32px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
-  --dsw-shadow-lv3: 0 22px 56px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
-  --dsw-mask-blur: blur(10px);
-  background-color: #090b10;
+    inset 1px 1px 0 rgba(255, 255, 255, 0.14),
+    inset -1px -1px 0 rgba(255, 255, 255, 0.04);
+  --lg-elev: 0 12px 36px rgba(0, 0, 0, 0.32);
+  --dsw-shadow-lv1: 0 2px 10px rgba(0, 0, 0, 0.28);
+  --dsw-shadow-lv2: 0 10px 28px rgba(0, 0, 0, 0.34);
+  --dsw-shadow-lv3: 0 20px 48px rgba(0, 0, 0, 0.42);
+  --dsw-mask-blur: blur(14px);
+  background-color: #0b0d12;
   background-image:
-    radial-gradient(18px 18px at 12% 18%, rgba(120, 90, 200, 0.4), transparent 70%),
-    radial-gradient(22px 22px at 28% 72%, rgba(40, 140, 210, 0.35), transparent 70%),
-    radial-gradient(16px 16px at 63% 24%, rgba(210, 80, 160, 0.28), transparent 70%),
-    radial-gradient(20px 20px at 81% 58%, rgba(36, 168, 186, 0.3), transparent 70%),
-    radial-gradient(14px 14px at 47% 46%, rgba(255, 255, 255, 0.06), transparent 70%),
-    radial-gradient(24px 24px at 8% 88%, rgba(80, 100, 220, 0.28), transparent 70%),
-    radial-gradient(1100px 760px at 12% -14%, rgba(78, 124, 230, 0.5), transparent 56%),
-    radial-gradient(860px 640px at 96% 8%, rgba(186, 72, 168, 0.32), transparent 52%),
-    radial-gradient(760px 560px at 62% 112%, rgba(36, 168, 186, 0.26), transparent 54%),
-    linear-gradient(168deg, #10131b 0%, #0a0c12 100%);
+    radial-gradient(900px 620px at 10% -10%, rgba(64, 96, 170, 0.42), transparent 58%),
+    radial-gradient(760px 540px at 98% 8%, rgba(120, 56, 120, 0.22), transparent 54%),
+    radial-gradient(700px 500px at 64% 112%, rgba(28, 120, 140, 0.18), transparent 54%),
+    linear-gradient(168deg, #12151c 0%, #0b0d12 100%);
 }
 
 body[data-liquid-glass] #root,
@@ -73,73 +62,73 @@ body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
   background: transparent !important;
 }
 
-/* Floating sidebar — macOS-style inset glass slab. */
+/* Floating sidebar slab. No backdrop-filter here — settings is a descendant. */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
-  margin: 10px 6px 10px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.22);
-  box-shadow: var(--lg-shine), 0 10px 36px rgba(20, 28, 45, 0.08);
+  margin: var(--lg-inset) 6px var(--lg-inset) var(--lg-inset);
+  border: var(--lg-hairline) !important;
+  border-radius: var(--lg-radius);
+  background: var(--lg-fill);
+  box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-body[data-liquid-glass][data-ds-dark-theme] #root > [data-slot] > div > div:first-child {
-  border-color: rgba(255, 255, 255, 0.14) !important;
-  background: rgba(16, 18, 24, 0.34);
-  box-shadow: var(--lg-shine), 0 12px 40px rgba(0, 0, 0, 0.28);
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
+  margin: var(--lg-inset) 6px;
+  border-radius: 16px;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) {
-  margin: 10px 10px 10px 6px;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 22px;
+  margin: var(--lg-inset) var(--lg-inset) var(--lg-inset) 6px;
+  border: var(--lg-hairline);
+  border-radius: var(--lg-radius);
+  background: var(--lg-fill);
+  box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-/* Floating conversation top bar. */
+body[data-liquid-glass] #root > [data-slot] > div[data-details-collapsed] > div:nth-child(3) {
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Floating session header. */
 body[data-liquid-glass] [data-slot="conversation.session.header"] > * {
   position: relative;
   box-sizing: border-box;
-  margin: 10px 16px 0;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.36);
-  box-shadow: var(--lg-shine), 0 8px 24px rgba(20, 28, 45, 0.07);
+  margin: var(--lg-inset) 16px 0;
+  border: var(--lg-hairline);
+  border-radius: var(--lg-radius-bar);
+  background: var(--lg-fill);
+  box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-body[data-liquid-glass][data-ds-dark-theme] [data-slot="conversation.session.header"] > * {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(16, 18, 24, 0.4);
-}
-
-/* Hosts that may clip (composer / header only — never the sidebar). */
-body[data-liquid-glass] [data-lg-host="composer"],
-body[data-liquid-glass] [data-lg-host="header"] {
+/* Composer host: frost only, no displacement. */
+body[data-liquid-glass] [data-lg-host="composer"] {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  background: var(--lg-fill-strong) !important;
+  box-shadow: var(--lg-shine), var(--lg-elev);
+}
+
+body[data-liquid-glass] [data-lg-host="header"] {
+  position: relative;
 }
 
 body[data-liquid-glass] [data-lg-host="sidebar"] {
   position: relative;
 }
 
-/* Dedicated layers: blur + optional refraction. */
 body[data-liquid-glass] .dsh-lg-effect {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  isolation: isolate;
   border-radius: inherit;
-  backdrop-filter: blur(16px) saturate(170%);
-  -webkit-backdrop-filter: blur(16px) saturate(170%);
-}
-
-body[data-liquid-glass] [data-lg-host="composer"] > .dsh-lg-effect {
-  backdrop-filter: blur(var(--lg-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(160%);
-  filter: url(#dsh-glass-distortion);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
 body[data-liquid-glass] .dsh-lg-shine {
@@ -158,18 +147,21 @@ body[data-liquid-glass] [data-lg-host] > :not(.dsh-lg-effect):not(.dsh-lg-shine)
 }
 
 body[data-liquid-glass] [data-side] {
-  filter: drop-shadow(0 2px 8px rgba(20, 28, 45, 0.12));
+  filter: drop-shadow(0 2px 8px rgba(20, 28, 45, 0.1));
 }
 
 @media (prefers-reduced-transparency: reduce) {
   body[data-liquid-glass] {
-    --lg-blur: 0px;
+    --lg-fill: #f3f5f8;
+    --lg-fill-strong: #ffffff;
     background-image: none;
-    background-color: var(--dsw-static-neutral-bluish-50, #f9fafb);
+    background-color: #eef1f5;
   }
 
   body[data-liquid-glass][data-ds-dark-theme] {
-    background-color: var(--dsw-static-neutral-bluish-950, #151517);
+    --lg-fill: #1c1e26;
+    --lg-fill-strong: #22242e;
+    background-color: #12141a;
   }
 
   body[data-liquid-glass] .dsh-lg-effect,

@@ -24,7 +24,7 @@ dsh plugin --profile web add H:\WorkProj\grok_v46_test\dshLiquidTheme
 dsh web
 ```
 
-打开 http://127.0.0.1:3080/ 。首屏应能看到渐变墙纸和半透明侧栏。
+打开 http://127.0.0.1:3080/ 。侧栏和会话顶栏应是留缝圆角的悬浮霜玻璃，输入条是玻璃胶囊。
 
 ## 卸载
 
@@ -37,9 +37,10 @@ dsh plugin --profile web remove dsh-liquid-glass
 ## 行为
 
 - 只改材质，不改布局、slot、工具或模型请求
-- 玻璃层按 [lucasromerodb/liquid-glass-effect-macos](https://github.com/lucasromerodb/liquid-glass-effect-macos)（[CodeSandbox nn5q2y](https://codesandbox.io/p/sandbox/nn5q2y)）的三层配方：SVG `feDisplacementMap` 折射 + 浅染色 + 内高光，模糊约 3px
-- 代码块 / diff / 终端保持较实的底，避免糊字
-- `prefers-reduced-transparency: reduce` 时关掉折射和 blur，改用实色
+- 侧栏、会话顶栏、输入条做成 macOS 式悬浮霜玻璃（圆角、留缝、高光边、`backdrop-filter`）
+- 侧栏本身不加 `backdrop-filter`，避免把设置弹层锁在栏宽里
+- 代码块 / diff / 终端保持较实的底
+- `prefers-reduced-transparency: reduce` 时关掉模糊，改用实色
 - 卸载插件即撤回 token 覆盖和 `data-liquid-glass`
 
 ## 兼容
