@@ -17,6 +17,7 @@ body[data-liquid-glass] {
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
   --lg-fill: rgba(255, 255, 255, 0.22);
   --lg-fill-strong: rgba(255, 255, 255, 0.5);
+  --lg-fill-float: rgba(255, 255, 255, 0.14);
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.62),
     inset -1px -1px 0 rgba(255, 255, 255, 0.18);
@@ -39,6 +40,7 @@ body[data-liquid-glass][data-ds-dark-theme] {
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.12);
   --lg-fill: rgba(22, 24, 30, 0.52);
   --lg-fill-strong: rgba(22, 24, 30, 0.64);
+  --lg-fill-float: rgba(22, 24, 30, 0.28);
   --lg-shine:
     inset 1px 1px 0 rgba(255, 255, 255, 0.14),
     inset -1px -1px 0 rgba(255, 255, 255, 0.04);
@@ -288,17 +290,28 @@ body[data-liquid-glass] :has(> [role="dialog"]) {
   z-index: 20000 !important;
 }
 
-/* Floating menus / popovers / jump chip — same frost as chrome, not a clear film. */
-body[data-liquid-glass] span:has(> button[aria-label*="上下文"]) > [class*="panel"],
-body[data-liquid-glass] span:has(> button[aria-label*="context"]) > [class*="panel"],
+/* Menus stay readable; the context meter should stay a thin frost, not a milky card. */
 body[data-liquid-glass] [role="menu"],
-body[data-liquid-glass] [role="listbox"],
-body[data-liquid-glass] [data-lg-host="float"] {
+body[data-liquid-glass] [role="listbox"] {
   background: var(--lg-fill-strong) !important;
   border: var(--lg-hairline) !important;
   box-shadow: var(--lg-shine), var(--lg-elev) !important;
   backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
   -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+}
+
+body[data-liquid-glass] span:has(> button[aria-label*="上下文"]) > [class*="panel"],
+body[data-liquid-glass] span:has(> button[aria-label*="context"]) > [class*="panel"],
+body[data-liquid-glass] [data-lg-host="float"] {
+  background: var(--lg-fill-float) !important;
+  border: var(--lg-hairline) !important;
+  box-shadow: var(--lg-shine), var(--lg-elev) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+body[data-liquid-glass] [data-lg-host="float"] > .dsh-lg-effect {
+  display: none;
 }
 
 body[data-liquid-glass] [data-lg-host="jump"],
@@ -311,9 +324,11 @@ body[data-liquid-glass] button[aria-label="Back to bottom"] {
   -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
-/* Trajectory: wallpaper shows through; toolbar is a thin frost strip. */
+/* Trajectory: wallpaper shows through; toolbar is a thin frost strip.
+   Extra top pad is set in JS so Duration/Turns sit below the overlay header. */
 body[data-liquid-glass] [data-lg-host="traces"] {
   background: transparent !important;
+  box-sizing: border-box;
 }
 
 body[data-liquid-glass] [data-lg-host="traces"] > *:first-child {
@@ -339,6 +354,7 @@ body[data-liquid-glass] [data-side] {
   body[data-liquid-glass] {
     --lg-fill: #f3f5f8;
     --lg-fill-strong: #ffffff;
+    --lg-fill-float: #f7f8fb;
     background-image: none;
     background-color: #eef1f5;
   }
