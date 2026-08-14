@@ -18,6 +18,7 @@ body[data-liquid-glass] {
   --lg-veil: 0;
   --lg-scrim: 0;
   --lg-wash: 255 255 255;
+  --lg-solid: rgb(var(--lg-wash) / var(--lg-scrim));
   --lg-hairline: 1px solid rgba(255, 255, 255, 0.46);
   --lg-fill: rgba(255, 255, 255, calc(0.22 * var(--lg-alpha)));
   --lg-fill-strong: rgba(255, 255, 255, calc(0.50 * var(--lg-alpha)));
@@ -94,8 +95,8 @@ body[data-liquid-glass] #root {
   z-index: 1;
 }
 
-/* Floating sidebar slab. Do not inject a covering blur layer here:
-   the slot child is 0×0, so an absolute overlay paints on top of the logo. */
+/* Floating sidebar slab. Blur lives on ::before, never on the column:
+   backdrop-filter on the column traps the settings modal (a descendant). */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
   box-sizing: border-box;
@@ -107,9 +108,23 @@ body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
+body[data-liquid-glass] #root > [data-slot] > div > div:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+}
+
 /* Pin the official 280px inner root to the floating column.
-   Keep the official 12px inline padding so left/right gutters match. */
+   Keep the official 12px inline padding so left/right gutters match.
+   Slot is display:contents, so this is the real box above the frost. */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child [data-slot="sidebar"] > * {
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -395,13 +410,15 @@ body[data-liquid-glass] [data-lg-host="traces"] {
   border: var(--lg-hairline);
   border-bottom: none;
   border-radius: var(--lg-radius-bar) var(--lg-radius-bar) 0 0;
-  background: rgba(255, 255, 255, calc(0.10 * var(--lg-alpha)));
+  background: rgba(255, 255, 255, calc(0.10 * var(--lg-alpha))) !important;
   box-shadow: var(--lg-shine);
   overflow: hidden;
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
 body[data-liquid-glass][data-ds-dark-theme] [data-lg-host="traces"] {
-  background: rgba(22, 24, 30, calc(0.28 * var(--lg-alpha)));
+  background: rgba(22, 24, 30, calc(0.28 * var(--lg-alpha))) !important;
 }
 
 body[data-liquid-glass] [data-lg-host="traces"] > *:first-child {
