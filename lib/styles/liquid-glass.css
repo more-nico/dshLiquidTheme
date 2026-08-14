@@ -84,7 +84,8 @@ body[data-liquid-glass] #root > [data-slot] > div > div:first-child [data-slot="
   padding-right: 24px;
 }
 
-body[data-liquid-glass] [data-lg-host="header"] {
+/* Conversation root is the positioning context for the overlay header. */
+body[data-liquid-glass] [data-slot="conversation"] > * {
   position: relative;
 }
 
@@ -118,16 +119,26 @@ body[data-liquid-glass] #root > [data-slot] > div[data-details-collapsed] > div:
   background: transparent;
 }
 
-/* Floating session header. Bottom margin keeps scrolled lines in the
-   wallpaper gap instead of showing through the glass. */
+/* Overlay header: out of flow so the transcript is full-height and
+   scrolls underneath the frost. */
+body[data-liquid-glass] [data-lg-host="header"],
 body[data-liquid-glass] [data-slot="conversation.session.header"] > * {
-  position: relative;
+  position: absolute;
+  top: var(--lg-inset);
+  left: 16px;
+  right: 16px;
+  z-index: 8;
   box-sizing: border-box;
-  margin: var(--lg-inset) 16px 10px;
+  margin: 0;
   border: var(--lg-hairline);
   border-radius: var(--lg-radius-bar);
   background: var(--lg-fill);
   box-shadow: var(--lg-shine), var(--lg-elev);
+}
+
+/* Keep the first message readable at scroll=0; further scrolling goes under. */
+body[data-liquid-glass] [data-slot="conversation.session"] > * {
+  padding-top: 88px;
 }
 
 /* Composer host: frost only, no displacement.
@@ -137,6 +148,31 @@ body[data-liquid-glass] [data-lg-host="composer"] {
   isolation: isolate;
   background: var(--lg-fill-strong) !important;
   box-shadow: var(--lg-shine), var(--lg-elev);
+}
+
+/* Sticky footer seat: fade-in frost so transcript does not collide with chrome. */
+body[data-liquid-glass] [data-lg-host="seat"] {
+  isolation: isolate;
+  padding-top: 12px;
+}
+
+body[data-liquid-glass] [data-lg-host="seat"] > .dsh-lg-effect {
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 36%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 36%);
+}
+
+/* Session stats under the composer: a long thin glass bar. */
+body[data-liquid-glass] [data-slot="conversation.composer.dock"] > * {
+  box-sizing: border-box;
+  width: min(780px, calc(100% - 32px));
+  margin: 8px auto 2px;
+  padding: 5px 16px;
+  border: var(--lg-hairline);
+  border-radius: 999px;
+  background: var(--lg-fill);
+  box-shadow: var(--lg-shine);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
 }
 
 body[data-liquid-glass] .dsh-lg-effect {
@@ -162,7 +198,8 @@ body[data-liquid-glass] .dsh-lg-shine {
 }
 
 body[data-liquid-glass] [data-lg-host="header"] > :not(.dsh-lg-effect):not(.dsh-lg-shine),
-body[data-liquid-glass] [data-lg-host="composer"] > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
+body[data-liquid-glass] [data-lg-host="composer"] > :not(.dsh-lg-effect):not(.dsh-lg-shine),
+body[data-liquid-glass] [data-lg-host="seat"] > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
   position: relative;
   z-index: 1;
 }
