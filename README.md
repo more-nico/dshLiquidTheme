@@ -4,6 +4,10 @@ DeepSeek Harness Web UI 的 Liquid Glass 主题插件。加载后叠在官方浅
 
 仓库：[github.com/more-nico/dshLiquidTheme](https://github.com/more-nico/dshLiquidTheme)
 
+![起始页](assets/home.png)
+
+![对话页](assets/chat.png)
+
 ## 安装
 
 需要本机已能运行 `dsh web`（当前验证版本 `@deepseek-ai/dsh@0.1.0-rc.6`）。
