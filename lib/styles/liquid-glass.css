@@ -161,6 +161,13 @@ body[data-liquid-glass] [data-slot="conversation"] > *::before {
   );
 }
 
+/* New-session / landing hero: no reading pad. */
+body[data-liquid-glass]:has([data-slot="conversation.hero.workspace"]) [data-slot="conversation"] > *::before,
+body[data-liquid-glass][data-lg-home] [data-slot="conversation"] > *::before {
+  content: none;
+  display: none;
+}
+
 /* Official collapsed track is 56px. A left inset + hairline would clip
    the 36px icons unless the slab itself shrinks. 8+48 stays on the track;
    5px inline pad + 1px border leaves a 36px centered hit target. */
