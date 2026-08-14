@@ -68,35 +68,62 @@ body[data-liquid-glass][data-ds-dark-theme] {
 
 body[data-liquid-glass] #root,
 body[data-liquid-glass] #root > [data-slot],
-body[data-liquid-glass] #root > [data-slot] > div {
+body[data-liquid-glass] #root > [data-slot] > div,
+body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
   background: transparent !important;
 }
 
-body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(2) {
-  background: transparent;
-}
-
-/* Frame columns: 1 sidebar, 2 center, 3 details. */
+/* Floating sidebar — macOS-style inset glass slab. */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
-  box-shadow: var(--lg-shine);
+  margin: 10px 6px 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.42) !important;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: var(--lg-shine), 0 10px 36px rgba(20, 28, 45, 0.08);
 }
 
-body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
-  border-right: 1px solid rgba(255, 255, 255, 0.35) !important;
+body[data-liquid-glass][data-ds-dark-theme] #root > [data-slot] > div > div:first-child {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background: rgba(16, 18, 24, 0.34);
+  box-shadow: var(--lg-shine), 0 12px 40px rgba(0, 0, 0, 0.28);
 }
 
 body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) {
-  border-left: 1px solid rgba(255, 255, 255, 0.35) !important;
+  margin: 10px 10px 10px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 22px;
 }
 
-body[data-liquid-glass] :has(> .dsh-lg-effect) {
+/* Floating conversation top bar. */
+body[data-liquid-glass] [data-slot="conversation.session.header"] > * {
+  position: relative;
+  box-sizing: border-box;
+  margin: 10px 16px 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.36);
+  box-shadow: var(--lg-shine), 0 8px 24px rgba(20, 28, 45, 0.07);
+}
+
+body[data-liquid-glass][data-ds-dark-theme] [data-slot="conversation.session.header"] > * {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(16, 18, 24, 0.4);
+}
+
+/* Hosts that may clip (composer / header only — never the sidebar). */
+body[data-liquid-glass] [data-lg-host="composer"],
+body[data-liquid-glass] [data-lg-host="header"] {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
 
-/* Dedicated layers injected by the client (same split as the sandbox demo). */
+body[data-liquid-glass] [data-lg-host="sidebar"] {
+  position: relative;
+}
+
+/* Dedicated layers: blur + optional refraction. */
 body[data-liquid-glass] .dsh-lg-effect {
   position: absolute;
   inset: 0;
@@ -105,8 +132,13 @@ body[data-liquid-glass] .dsh-lg-effect {
   overflow: hidden;
   isolation: isolate;
   border-radius: inherit;
-  backdrop-filter: blur(var(--lg-blur));
-  -webkit-backdrop-filter: blur(var(--lg-blur));
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+}
+
+body[data-liquid-glass] [data-lg-host="composer"] > .dsh-lg-effect {
+  backdrop-filter: blur(var(--lg-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(160%);
   filter: url(#dsh-glass-distortion);
 }
 
@@ -120,8 +152,7 @@ body[data-liquid-glass] .dsh-lg-shine {
   box-shadow: var(--lg-shine);
 }
 
-body[data-liquid-glass] #root > [data-slot] > div > div:first-child > :not(.dsh-lg-effect):not(.dsh-lg-shine),
-body[data-liquid-glass] #root > [data-slot] > div > div:nth-child(3) > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
+body[data-liquid-glass] [data-lg-host] > :not(.dsh-lg-effect):not(.dsh-lg-shine) {
   position: relative;
   z-index: 3;
 }
