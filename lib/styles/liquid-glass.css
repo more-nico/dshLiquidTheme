@@ -109,26 +109,37 @@ body[data-liquid-glass] [data-slot="conversation"] > * {
   position: relative;
 }
 
-/* Official collapsed width minus our floating margins was 44px and clipped
-   the 36px icon hit targets. Lock a rail that can hold them. */
+/* Official collapsed track is 56px. A left inset + hairline would clip
+   the 36px icons unless the slab itself shrinks. 8+48 stays on the track;
+   5px inline pad + 1px border leaves a 36px centered hit target. */
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
-  margin: var(--lg-inset) 6px var(--lg-inset) 8px;
+  margin: var(--lg-inset) 0 var(--lg-inset) 8px;
   padding: 0;
-  width: 56px;
-  min-width: 56px;
-  flex: 0 0 56px;
-  border-radius: 16px;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  flex: 0 0 48px;
+  border-radius: var(--lg-radius);
   overflow: hidden;
-  background: rgba(255, 255, 255, calc(0.42 * var(--lg-alpha)));
-}
-
-body[data-liquid-glass][data-ds-dark-theme] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child {
-  background: rgba(22, 24, 30, calc(0.64 * var(--lg-alpha)));
+  background: var(--lg-fill);
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child [data-slot="sidebar"] > * {
-  padding: 18px 0 6px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px 5px 8px;
+  align-items: center;
   background: transparent !important;
+}
+
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] [class*="logoRow"],
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] [class*="regionArea"],
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] [class*="headerActions"] {
+  justify-content: center;
+}
+
+body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] [class*="newSession"] {
+  align-self: center;
 }
 
 body[data-liquid-glass] #root > [data-slot] > div[data-sidebar-collapsed] > div:first-child [class*="footArea"],
