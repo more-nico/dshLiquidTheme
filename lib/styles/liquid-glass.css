@@ -10,9 +10,9 @@ html:has(body[data-liquid-glass]) {
 
 body[data-liquid-glass] {
   --lg-blur: 5px;
-  --lg-sat: 170%;
-  --lg-contrast: 1.12;
-  --lg-bright: 1.04;
+  --lg-sat: 110%;
+  --lg-contrast: 1;
+  --lg-bright: 1.2;
   --lg-radius: 22px;
   --lg-radius-bar: 18px;
   --lg-inset: 10px;
@@ -98,6 +98,7 @@ body[data-liquid-glass] #root {
    backdrop-filter on the column traps the settings modal (a descendant). */
 body[data-liquid-glass] #root > [data-slot] > div > div:first-child {
   position: relative;
+  z-index: 8;
   box-sizing: border-box;
   margin: var(--lg-inset) 6px var(--lg-inset) var(--lg-inset);
   padding: 0;
@@ -331,15 +332,18 @@ body[data-liquid-glass] [data-lg-host="composer"] {
   box-shadow: var(--lg-shine), var(--lg-elev);
 }
 
-/* Sticky footer seat: fade-in frost so transcript does not collide with chrome. */
+/* Sticky footer seat: a full-pane frost sheet; composer/dock float on it. */
 body[data-liquid-glass] [data-lg-host="seat"] {
   isolation: isolate;
-  padding-top: 12px;
+  overflow: visible !important;
+  padding-top: 28px;
 }
 
 body[data-liquid-glass] [data-lg-host="seat"] > .dsh-lg-effect {
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 36%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 36%);
+  inset: auto;
+  border-radius: 0;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 48%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%);
 }
 
 /* Session stats under the composer: a long thin glass bar. */
@@ -546,6 +550,13 @@ body[data-liquid-glass] [data-side] {
   border: 1px solid var(--dsw-alias-border-l2);
   border-radius: 14px;
   background: var(--dsw-alias-bg-module-platform);
+}
+
+.dsh-lg-pref-heading {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.02em;
 }
 
 .dsh-lg-pref-row {
