@@ -82,6 +82,61 @@ body[data-liquid-glass][data-lg-bg="color"] {
   background-image: none;
 }
 
+/* Adaptive ink: @exhuma/readable-color (W3C). --lg-ink is a lightness
+   walk of the sampled wallpaper/frost, not flat black/white. */
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] {
+  --dsw-alias-label-primary: var(--lg-ink);
+  --dsw-alias-label-secondary: var(--lg-ink-soft);
+  --dsw-alias-label-tertiary: var(--lg-ink-faint);
+  --dsw-alias-label-quaternary: var(--lg-ink-faint);
+  --dsw-alias-label-disable: var(--lg-ink-faint);
+  --dsw-alias-label-placeholder: var(--lg-ink-soft);
+  --dsw-alias-icon-primary: var(--lg-ink);
+  --dsw-alias-icon-secondary: var(--lg-ink-soft);
+  --dsw-alias-icon-tertiary: var(--lg-ink-faint);
+  --dsw-alias-icon-disable: var(--lg-ink-faint);
+  --dsw-alias-label-inverted: var(--lg-ink-flip);
+  --dsw-alias-label-primary-inverted: var(--lg-ink-flip);
+  color: var(--lg-ink);
+  caret-color: var(--lg-ink);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] textarea,
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [contenteditable="true"] {
+  color: var(--dsw-alias-label-primary);
+  caret-color: var(--dsw-alias-label-primary);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] textarea::placeholder {
+  color: var(--dsw-alias-label-secondary);
+}
+
+/* Chrome labels (not reading pads) must beat one-class CSS modules.
+   Pads keep markdown / syntax colors. */
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) :where(
+  span, p, li, label, h1, h2, h3, h4, h5, h6, small
+) {
+  color: var(--dsw-alias-label-primary);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="sidebar.settings"],
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="sidebar.settings"] :where(button, span, svg, path),
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="settings.trigger"],
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="settings.trigger"] :where(button, span, svg, path) {
+  color: var(--dsw-alias-label-primary) !important;
+  fill: currentColor;
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-hint,
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-lead,
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-meta {
+  color: var(--dsw-alias-label-secondary);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-error {
+  color: var(--dsw-alias-label-danger, #c44747);
+}
+
 body[data-liquid-glass] #root,
 body[data-liquid-glass] #root > [data-slot],
 body[data-liquid-glass] #root > [data-slot] > div,
