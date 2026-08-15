@@ -12,6 +12,14 @@
 
 ![设置](assets/settings.png)
 
+同一套玻璃，换壁纸：
+
+![海边书店壁纸](assets/wallpaper-seaside.jpg)
+
+![蓝天草地壁纸](assets/wallpaper-sky.jpg)
+
+![水中黑猫壁纸](assets/wallpaper-cat.jpg)
+
 ## 特性
 
 - **内置 2K 壁纸**：DeepSeek 风格深海虎鲸，随插件分发；也可换成图片地址、本地图或纯色
