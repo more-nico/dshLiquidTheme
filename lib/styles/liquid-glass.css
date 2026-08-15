@@ -82,58 +82,69 @@ body[data-liquid-glass][data-lg-bg="color"] {
   background-image: none;
 }
 
-/* Adaptive ink: @exhuma/readable-color (W3C). --lg-ink is a lightness
-   walk of the sampled wallpaper/frost, not flat black/white. */
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] {
+/* Adaptive ink: client.js chooses WCAG-AA colors from the sampled wallpaper
+   and the known glass layers. These values keep the first paint readable
+   while the image sampler is loading or unavailable. */
+body[data-liquid-glass][data-lg-ink-auto] {
+  --lg-ink: #17202d;
+  --lg-ink-soft: #4b5666;
+  --lg-ink-faint: #586372;
+  --lg-ink-guard: rgba(255, 255, 255, 0.18);
+}
+
+body[data-liquid-glass][data-lg-ink-auto][data-ds-dark-theme] {
+  --lg-ink: #f4f7ff;
+  --lg-ink-soft: #c5cddd;
+  --lg-ink-faint: #b5bfce;
+  --lg-ink-guard: rgba(0, 0, 0, 0.18);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text] {
   --dsw-alias-label-primary: var(--lg-ink);
   --dsw-alias-label-secondary: var(--lg-ink-soft);
   --dsw-alias-label-tertiary: var(--lg-ink-faint);
   --dsw-alias-label-quaternary: var(--lg-ink-faint);
-  --dsw-alias-label-disable: var(--lg-ink-faint);
   --dsw-alias-label-placeholder: var(--lg-ink-soft);
   --dsw-alias-icon-primary: var(--lg-ink);
   --dsw-alias-icon-secondary: var(--lg-ink-soft);
   --dsw-alias-icon-tertiary: var(--lg-ink-faint);
-  --dsw-alias-icon-disable: var(--lg-ink-faint);
-  --dsw-alias-label-inverted: var(--lg-ink-flip);
-  --dsw-alias-label-primary-inverted: var(--lg-ink-flip);
-  color: var(--lg-ink);
+  color: var(--lg-ink) !important;
   caret-color: var(--lg-ink);
 }
 
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] textarea,
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [contenteditable="true"] {
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text]:is(textarea, input, [contenteditable="true"]) {
   color: var(--dsw-alias-label-primary);
   caret-color: var(--dsw-alias-label-primary);
 }
 
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] textarea::placeholder {
+/* InputBar renders draft text in data-input-backdrop while its textarea is
+   intentionally transparent. Keep adaptive ink from making both layers draw
+   the same glyphs, which produces a doubled CJK face. */
+body[data-liquid-glass][data-lg-ink-auto] [data-composer-card]:has([data-input-backdrop]) textarea[data-lg-ink-text] {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  caret-color: var(--lg-ink);
+}
+
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text]::placeholder {
   color: var(--dsw-alias-label-secondary);
 }
 
-/* Chrome labels (not reading pads) must beat one-class CSS modules.
-   Pads keep markdown / syntax colors. */
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) :where(
-  span, p, li, label, h1, h2, h3, h4, h5, h6, small
-) {
-  color: var(--dsw-alias-label-primary);
+/* A guard is a small background behind short text, never a glyph effect. */
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text][data-lg-ink-guard] {
+  background-color: var(--lg-ink-guard);
+  border-radius: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="sidebar.settings"],
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="sidebar.settings"] :where(button, span, svg, path),
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="settings.trigger"],
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink] [data-slot="settings.trigger"] :where(button, span, svg, path) {
-  color: var(--dsw-alias-label-primary) !important;
-  fill: currentColor;
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text].dsh-lg-pref-hint,
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text].dsh-lg-pref-lead,
+body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink-text].dsh-lg-pref-meta {
+  color: var(--lg-ink-soft) !important;
 }
 
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-hint,
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-lead,
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-meta {
-  color: var(--dsw-alias-label-secondary);
-}
-
-body[data-liquid-glass][data-lg-ink-auto] [data-lg-ink]:not([data-lg-pad]) .dsh-lg-pref-error {
+body[data-liquid-glass][data-lg-ink-auto] .dsh-lg-pref-error {
   color: var(--dsw-alias-label-danger, #c44747);
 }
 
@@ -424,6 +435,19 @@ body[data-liquid-glass] [data-slot="conversation.composer.dock"] > * {
   -webkit-backdrop-filter: var(--lg-fx, var(--lg-frost));
 }
 
+/* Todo and agent takeovers are their own glass cards. The host components
+   provide stable semantic hooks, so their refraction can follow each card's
+   live size instead of borrowing the composer filter. */
+body[data-liquid-glass] [data-testid="todo-panel"],
+body[data-liquid-glass] [data-question-key] > section,
+body[data-liquid-glass] [data-plan-review-key] > section {
+  border: var(--lg-hairline) !important;
+  background: var(--lg-fill-strong) !important;
+  box-shadow: var(--lg-shine), var(--lg-elev);
+  backdrop-filter: var(--lg-fx, var(--lg-frost));
+  -webkit-backdrop-filter: var(--lg-fx, var(--lg-frost));
+}
+
 body[data-liquid-glass] .dsh-lg-effect {
   position: absolute;
   inset: 0;
@@ -453,6 +477,27 @@ body[data-liquid-glass] [data-lg-host="seat"] > :not(.dsh-lg-effect):not(.dsh-lg
 body[data-liquid-glass] [data-lg-host="float"] > :not(.dsh-lg-effect):not(.dsh-lg-shine):not(.dsh-lg-rim) {
   position: relative;
   z-index: 1;
+}
+
+/* Composer slot anchors are display:contents. Lift their actual boxes above
+   the fixed seat veil, otherwise translucent Todo and takeover cards are
+   blurred by the veil even though the seat's direct-child rule matches the
+   zero-size anchor. */
+body[data-liquid-glass] [data-lg-host="seat"] [data-chain-overlay-fallback="conversation.composer"] > *,
+body[data-liquid-glass] [data-lg-host="seat"] [data-testid="todo-panel"],
+body[data-liquid-glass] [data-lg-host="seat"] [data-question-key],
+body[data-liquid-glass] [data-lg-host="seat"] [data-plan-review-key] {
+  position: relative;
+  z-index: 1;
+}
+
+/* An open model/context popup must escape the seat's sibling stack. Without
+   lifting the display:contents fallback branch, its own z-index is trapped
+   below the Todo card even when the popup itself is z-index:20010. */
+body[data-liquid-glass] [data-lg-host="seat"]:has([role="menu"], [role="listbox"], [role="dialog"], [data-lg-host="float"]) [data-chain-overlay-fallback="conversation.composer"] > *,
+body[data-liquid-glass] [data-lg-host="seat"]:has([role="menu"], [role="listbox"], [role="dialog"], [data-lg-host="float"]) [data-slot="conversation.composer"] > *,
+body[data-liquid-glass] [data-lg-host="seat"]:has([role="menu"], [role="listbox"], [role="dialog"], [data-lg-host="float"]) [data-lg-host="composer"] {
+  z-index: 20010 !important;
 }
 
 /* Settings overlay lives in the sidebar. The inner rail is z-index 1 so
@@ -489,9 +534,17 @@ body[data-liquid-glass] [role="listbox"] {
   -webkit-backdrop-filter: var(--lg-frost);
 }
 
+/* Menus and the context dialog live inside the composer. Their translucent
+   surface must not sit below the parent's rim or inherit a second outline. */
+body[data-liquid-glass] [data-lg-host="composer"]:has([role="menu"], [role="listbox"], [role="dialog"], [data-lg-host="float"]) > .dsh-lg-rim,
+body[data-liquid-glass]:has([role="menu"], [role="listbox"], [role="dialog"], [data-lg-host="float"]) [data-lg-host="composer"] > .dsh-lg-rim {
+  display: none !important;
+}
+
 body[data-liquid-glass] span:has(> button[aria-label*="上下文"]) > [class*="panel"],
 body[data-liquid-glass] span:has(> button[aria-label*="context"]) > [class*="panel"],
 body[data-liquid-glass] [data-lg-host="float"] {
+  z-index: 20010 !important;
   background: var(--lg-fill-float) !important;
   border: var(--lg-hairline) !important;
   box-shadow: var(--lg-shine), var(--lg-elev) !important;
@@ -573,6 +626,10 @@ body[data-liquid-glass] [data-side] {
   body[data-liquid-glass] .dsh-lg-rim,
   body[data-liquid-glass] #root > [data-slot] > div > div:first-child::after {
     display: none;
+  }
+
+  body[data-liquid-glass] [data-lg-ink-text][data-lg-ink-guard] {
+    background-color: transparent;
   }
 }
 
