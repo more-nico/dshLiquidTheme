@@ -172,14 +172,23 @@ body[data-liquid-glass] [data-slot="conversation"] > * {
 }
 
 /* Per-block reading pads: user bubble + assistant prose. Think/tool
-   rows stay clear until expanded. */
+   rows stay clear until expanded. Pwsh/Bash put the terminal in a
+   DisclosureRow (or a sibling of [data-sample=bash]); CSS covers that
+   surface even before client.js retags it. Do not set padding on
+   [data-terminal] — it owns a 30px prompt gutter. */
 body[data-liquid-glass][data-lg-scrim] [data-lg-pad="assistant"],
-body[data-liquid-glass][data-lg-scrim] [data-lg-pad="expand"] {
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="expand"],
+body[data-liquid-glass][data-lg-scrim] [data-variant]:has([aria-expanded="true"]) [data-terminal],
+body[data-liquid-glass][data-lg-scrim] [data-sample][aria-expanded="true"] + * [data-terminal] {
   box-sizing: border-box;
   background: rgb(var(--lg-wash) / var(--lg-scrim));
   backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
   -webkit-backdrop-filter: blur(var(--lg-scrim-blur)) saturate(var(--lg-sat));
   border-radius: 16px;
+}
+
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="assistant"],
+body[data-liquid-glass][data-lg-scrim] [data-lg-pad="expand"]:not([data-terminal]) {
   padding: 10px 16px;
 }
 
